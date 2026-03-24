@@ -1,21 +1,12 @@
 import { requireNativeModule } from 'expo-modules-core';
-
-interface NativeLensInfo {
-  deviceType: string;
-  focalLength35mm: number;
-  minZoomFactor: number;
-  maxOpticalZoomFactor: number;
-  maxZoomFactor: number;
-}
+import type { LensInfo } from '../../src/types/camera';
 
 interface LensInfoModuleType {
-  getAvailableLenses(): NativeLensInfo[];
+  getAvailableLenses(): LensInfo[];
 }
 
 const LensInfoModule = requireNativeModule<LensInfoModuleType>('LensInfoModule');
 
-export function getAvailableLenses(): NativeLensInfo[] {
+export function getAvailableLenses(): LensInfo[] {
   return LensInfoModule.getAvailableLenses();
 }
-
-export type { NativeLensInfo };

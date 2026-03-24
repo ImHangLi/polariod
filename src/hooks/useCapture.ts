@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CameraView } from 'expo-camera';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as MediaLibrary from 'expo-media-library';
@@ -8,6 +8,14 @@ export function useCapture() {
   const cameraRef = useRef<CameraView>(null);
   const [capturing, setCapturing] = useState(false);
   const capturingRef = useRef(false);
+  const hasMediaPermission = useRef(false);
+
+  // Request media library permission once on mount
+  useEffect(() => {
+    MediaLibrary.requestPermissionsAsync().then(({ status }) => {
+      hasMediaPermission.current = status === 'granted';
+    });
+  }, []);
 
   const capture = useCallback(async (aspectRatio: AspectRatio) => {
     if (!cameraRef.current || capturingRef.current) return;
@@ -44,8 +52,11 @@ export function useCapture() {
         { compress: 0.95, format: ImageManipulator.SaveFormat.JPEG },
       );
 
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status === 'granted') {
+      if (!hasMediaPermission.current) {
+        const { status } = await MediaLibrary.requestPermissionsAsync();
+        hasMediaPermission.current = status === 'granted';
+      }
+      if (hasMediaPermission.current) {
         await MediaLibrary.saveToLibraryAsync(cropped.uri);
       }
     } finally {

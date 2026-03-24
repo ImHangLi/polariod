@@ -22,7 +22,7 @@ export function ZoomControl({ preset, currentStopIndex, onCycle }: ZoomControlPr
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 60,
+    top: 100,
     left: 0,
     right: 0,
     alignItems: 'center',
