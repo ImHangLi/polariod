@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Polariod",
+    "slug": "polariod",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
+    "scheme": "polariod",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.polariod.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Polariod needs camera access to take photos.",
+        "NSPhotoLibraryAddUsageDescription": "Polariod needs photo library access to save your photos.",
+        "UIStatusBarHidden": true,
+        "UIViewControllerBasedStatusBarAppearance": false
+      }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Polariod needs camera access to take photos."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Polariod needs photo library access to save your photos."
+        }
+      ],
+      "expo-router",
+      "./modules/lens-info"
+    ]
+  }
+}
