@@ -8,9 +8,9 @@ interface FlashButtonProps {
 }
 
 const FLASH_LABELS: Record<FlashMode, string> = {
-  auto: 'Flash A',
-  on: 'Flash',
-  off: 'Flash X',
+  auto: '\u26A1A',
+  on: '\u26A1',
+  off: '\u26A1\u2715',
 };
 
 export function FlashButton({ mode, userSelectable, onCycle }: FlashButtonProps) {
