@@ -1,12 +1,15 @@
-import { requireNativeModule } from 'expo-modules-core';
 import type { LensInfo } from '../../src/types/camera';
 
-interface LensInfoModuleType {
-  getAvailableLenses(): LensInfo[];
-}
-
-const LensInfoModule = requireNativeModule<LensInfoModuleType>('LensInfoModule');
-
+/**
+ * Lazily loads the native module to avoid hanging if it's not linked.
+ * requireNativeModule hangs (not throws) when the module doesn't exist.
+ */
 export function getAvailableLenses(): LensInfo[] {
-  return LensInfoModule.getAvailableLenses();
+  try {
+    const { requireNativeModule } = require('expo-modules-core');
+    const LensInfoModule = requireNativeModule('LensInfoModule');
+    return LensInfoModule.getAvailableLenses();
+  } catch {
+    return [];
+  }
 }

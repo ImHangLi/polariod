@@ -3,15 +3,6 @@ import { PRESETS } from '../constants/presets';
 import type { FlashMode, LensInfo } from '../types/camera';
 import { useLensMapping } from './useLensMapping';
 
-let getAvailableLenses: (() => LensInfo[]) | undefined;
-try {
-  // Dynamic import so it doesn't crash when native module is unavailable
-  const mod = require('../../modules/lens-info');
-  getAvailableLenses = mod.getAvailableLenses;
-} catch {
-  // Native module not available (e.g., web, simulator, tests)
-}
-
 export function useCamera() {
   const [presetIndex, setPresetIndex] = useState(0);
   const [currentZoomStop, setCurrentZoomStop] = useState(0);
@@ -23,11 +14,13 @@ export function useCamera() {
 
   useEffect(() => {
     try {
-      if (getAvailableLenses) {
-        setLenses(getAvailableLenses());
+      const { getAvailableLenses } = require('../../modules/lens-info');
+      const result = getAvailableLenses();
+      if (Array.isArray(result)) {
+        setLenses(result);
       }
     } catch {
-      setLenses([]);
+      // Native module not available — lens mapping will use defaults
     }
   }, []);
 

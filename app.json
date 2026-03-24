@@ -35,8 +35,7 @@
           "photosPermission": "Polariod needs photo library access to save your photos."
         }
       ],
-      "expo-router",
-      "./modules/lens-info"
+      "expo-router"
     ]
   }
 }
