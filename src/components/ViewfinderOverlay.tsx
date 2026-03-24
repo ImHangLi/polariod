@@ -2,8 +2,6 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import type { AspectRatio } from '../types/camera';
 import { calculateCropRect } from '../utils/cropCalculation';
 
-export { calculateCropRect };
-
 interface ViewfinderOverlayProps {
   aspectRatio: AspectRatio;
 }
